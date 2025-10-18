@@ -10,9 +10,18 @@ export interface SiteConfig extends HeaderProps {
 
 export interface SiteContent {
   hero: HeroProps;
+  education:EducationProps[],
   experience: ExperienceProps[];
   projects: ProjectProps[];
   about: AboutProps;
+}
+
+export interface EducationProps {
+  school: string;
+  department: string;
+  startDate: string;
+  endDate: string;
+  summary: string | string[];
 }
 
 export interface HeroProps {

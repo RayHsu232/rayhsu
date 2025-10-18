@@ -1,24 +1,24 @@
 ---
 import Section from "./Section.astro";
-import type { ExperienceProps } from "@types";
+import type { EducationProps } from "@types";
 
 interface Props {
-  experience: ExperienceProps[];
+  education: EducationProps[];
 }
 
-const { experience } = Astro.props;
+const { education } = Astro.props;
 ---
 
-<Section text="工作经历" href="experience">
+<Section text="教育经历" href="education">
   {
-    experience.map(({ company, position, startDate, endDate, summary }) => (
+    education.map(({ school, department, startDate, endDate, summary }) => (
       <div class="mb-10">
         <h3 class="mb-1.5 font-serif text-2xl font-semibold text-white">
-          {company}
+          {school}
         </h3>
         <div class="flex flex-col items-start pb-5">
           <h4 class="mb-0.5 font-serif text-2xl font-medium text-primary">
-            {position}
+            {department}
           </h4>
           <span class="pb-[2px] text-sm text-white/70">
             {startDate} — {endDate}

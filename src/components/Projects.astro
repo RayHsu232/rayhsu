@@ -10,7 +10,7 @@ interface Props {
 const { projects } = Astro.props;
 ---
 
-<Section text="Featured Projects" href="projects">
+<Section text="项目经历" href="projects">
   {
     projects.map(({ name, summary, image, linkPreview, linkSource }, index) => {
       const top = 98 + index * 40;
