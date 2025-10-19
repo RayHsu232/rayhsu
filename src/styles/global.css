@@ -1,7 +1,8 @@
 @import "tailwindcss";
+@import '@fontsource/lxgw-wenkai';
 
 @theme {
-  --font-sans: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-sans: "LXGW WenKai", system-ui, sans-serif; 
   --font-serif: "Gabarito Variable", ui-serif, serif;
 
   --color-primary: #2563eb;
