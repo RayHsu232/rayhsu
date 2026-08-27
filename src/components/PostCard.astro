@@ -1,0 +1,44 @@
+---
+import { formatDate } from "@utils/posts";
+import type { Post } from "@lib/content";
+
+type Props = { post: Post };
+
+const { post } = Astro.props;
+---
+
+<article
+  class="group rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm"
+>
+  <div class="mb-2 flex items-center gap-3 text-sm text-muted">
+    <time datetime={post.data.date.toISOString()}>
+      {formatDate(post.data.date)}
+    </time>
+    {
+      post.data.category && (
+        <span class="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs text-accent">
+          {post.data.category}
+        </span>
+      )
+    }
+  </div>
+  <h2 class="mb-2 text-lg font-semibold text-ink md:text-xl">
+    <a href={`/posts/${post.id}/`} class="transition-colors group-hover:text-accent">
+      {post.data.title}
+    </a>
+  </h2>
+  <p class="mb-4 line-clamp-2 text-sm leading-relaxed text-muted">
+    {post.data.description}
+  </p>
+  {
+    post.data.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {post.data.tags.map((tag) => (
+          <span class="rounded-full border border-line px-2.5 py-0.5 text-xs text-muted">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )
+  }
+</article>
