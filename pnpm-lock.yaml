@@ -17,9 +17,6 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
-      '@fontsource-variable/gabarito':
-        specifier: ^5.1.0
-        version: 5.2.6
       '@fontsource-variable/geist':
         specifier: ^5.3.0
         version: 5.3.0
@@ -29,12 +26,6 @@ importers:
       '@fontsource-variable/noto-sans-sc':
         specifier: ^5.3.0
         version: 5.3.0
-      '@fontsource/be-vietnam-pro':
-        specifier: ^5.1.0
-        version: 5.2.6
-      '@fontsource/lxgw-wenkai':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@iconify-json/ph':
         specifier: ^1.2.2
         version: 1.2.2
@@ -326,9 +317,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/gabarito@5.2.6':
-    resolution: {integrity: sha512-pXhojiApjvDdo8HWo3BtKIeccO8pRF9n+xiErGir1An2wLokWaKImXwjyo47aJHPiGOzEF75O0anzfeVCe0NMg==}
-
   '@fontsource-variable/geist@5.3.0':
     resolution: {integrity: sha512-j0m+vLQuG5XAYoHtGCVu0spvlGreR3EzpECUVzkFmI1mTVnAO38l/NEPDCFgZ177JxzYJCLSmTQibIiYPilGrA==}
 
@@ -337,12 +325,6 @@ packages:
 
   '@fontsource-variable/noto-sans-sc@5.3.0':
     resolution: {integrity: sha512-lNar1dF7Ik/lHNPo/7JWG0TolXY29LtsqYgMvEysooZ5bsO9uH4shJmRrwyJ3PjyTPljhpMJEK0jDuLSU4vJ1w==}
-
-  '@fontsource/be-vietnam-pro@5.2.6':
-    resolution: {integrity: sha512-OdXpfoB7RFk6e2nby+nzeMW1DKNBkl4aE8zVC9LOJLt9ixA0LrH1kUZeFA5t4zpyIoMa1MIKyuoH/lJbUKhWsQ==}
-
-  '@fontsource/lxgw-wenkai@5.2.5':
-    resolution: {integrity: sha512-lIBouZW7qNw3VdVnjc0NC80iDfxjU7OnaKGaz6QHiHjC8z0fv9MyrHpeBMzkPnyEVabcpUu4Wf8DnaihfGVYtw==}
 
   '@iconify-json/ph@1.2.2':
     resolution: {integrity: sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==}
@@ -2681,17 +2663,11 @@ snapshots:
   '@esbuild/win32-x64@0.25.9':
     optional: true
 
-  '@fontsource-variable/gabarito@5.2.6': {}
-
   '@fontsource-variable/geist@5.3.0': {}
 
   '@fontsource-variable/jetbrains-mono@5.3.0': {}
 
   '@fontsource-variable/noto-sans-sc@5.3.0': {}
-
-  '@fontsource/be-vietnam-pro@5.2.6': {}
-
-  '@fontsource/lxgw-wenkai@5.2.5': {}
 
   '@iconify-json/ph@1.2.2':
     dependencies:
