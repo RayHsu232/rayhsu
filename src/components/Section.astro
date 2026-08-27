@@ -7,10 +7,8 @@ interface Props {
 const { text, href } = Astro.props;
 ---
 
-<section id={href} class="py-24">
-  <h2
-    class="mb-14 font-serif text-4xl font-bold tracking-tighter text-white md:text-5xl"
-  >
+<section id={href} class="py-16 md:py-20">
+  <h2 class="mb-10 text-3xl font-bold tracking-tight text-ink md:text-4xl">
     {text}
   </h2>
   <slot />

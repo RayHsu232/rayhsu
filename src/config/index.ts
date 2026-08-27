@@ -4,8 +4,8 @@ export const SITE_CONFIG: SiteConfig = {
   title: "Ray Hsu 徐 睿 — Software Developer",
   author: "Ray Hsu",
   description:
-    "Find Something worth to be persuited, no matter what cost",
-  lang: "cn",
+    "Find something worth pursuing, no matter what it cost.",
+  lang: "zh-CN",
   siteLogo: "/webICon-personal.png",
   navLinks: [
     { text: "教育经历", href: "#education" },
@@ -27,7 +27,7 @@ export const SITE_CONTENT: SiteContent = {
     name: "Ray Hsu 徐 睿",
     specialty: "软件工程师",
     summary:
-      `Find something worth to be persuited, no matter what it cost.`,
+      `Find something worth pursuing, no matter what it cost.`,
     email: "ruixu1114@gmail.com",
   },
   education:[{
