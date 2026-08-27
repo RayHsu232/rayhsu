@@ -1,9 +1,13 @@
 ---
 import Header from "@components/Header.astro";
-import "@fontsource/be-vietnam-pro";
-import "@fontsource-variable/gabarito";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/noto-sans-sc";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/global.css";
 import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
+
+type Props = { title?: string; description?: string };
 
 const {
   title,
@@ -14,20 +18,24 @@ const {
   author,
   socialLinks,
   socialImage,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
-} = SITE_CONFIG;
+} = { ...SITE_CONFIG, ...Astro.props };
 
-const ogImgUrl = canonicalURL + socialImage;
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  SITE_CONFIG.canonicalURL || Astro.site,
+).href;
+const ogImgUrl = new URL(socialImage, canonicalURL).href;
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-pt-16 scroll-smooth">
+<html lang={lang} class="scroll-pt-24 scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
@@ -35,6 +43,7 @@ const ogImgUrl = canonicalURL + socialImage;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImgUrl} />
+    <meta property="og:type" content="website" />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
@@ -42,9 +51,9 @@ const ogImgUrl = canonicalURL + socialImage;
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImgUrl} />
   </head>
-  <body class="bg-black font-sans">
+  <body class="bg-canvas font-sans text-ink antialiased">
     <Header siteLogo={siteLogo} navLinks={navLinks} />
-    <main class="mx-auto max-w-3xl px-5">
+    <main class="mx-auto w-full max-w-6xl px-5">
       <slot />
     </main>
     <Footer author={author} socialLinks={socialLinks} />

@@ -1,25 +1,21 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Ray Hsu 徐 睿 — Software Developer",
+  title: "Ray Hsu 徐睿",
   author: "Ray Hsu",
-  description:
-    "Find Something worth to be persuited, no matter what cost",
-  lang: "cn",
+  description: "Ray Hsu 的个人博客：记录技术文章与随想。",
+  lang: "zh-CN",
   siteLogo: "/webICon-personal.png",
   navLinks: [
-    { text: "教育经历", href: "#education" },
-    { text: "工作经历", href: "#experience" },
-    { text: "项目", href: "#projects" },
-    { text: "关于", href: "#about" },
+    { text: "首页", href: "/" },
+    { text: "关于我", href: "/about" },
   ],
   socialLinks: [
-    { text: "微信", href: "https://github.com/immois/astro-zen" },
-    { text: "X", href: "https://github.com/immois/astro-zen" },
-    { text: "Github", href: "https://github.com/immois/astro-zen" },
+    { text: "GitHub", href: "https://github.com/RayHsu232" },
+    { text: "Email", href: "mailto:ruixu1114@gmail.com" },
   ],
-  socialImage: "/zen-og.png",
-  canonicalURL: "https://astro-zen.vercel.app",
+  socialImage: "/og-image.jpg",
+  canonicalURL: "https://www.rayhsu.tech",
 };
 
 export const SITE_CONTENT: SiteContent = {
@@ -27,7 +23,7 @@ export const SITE_CONTENT: SiteContent = {
     name: "Ray Hsu 徐 睿",
     specialty: "软件工程师",
     summary:
-      `Find something worth to be persuited, no matter what it cost.`,
+      `Find something worth pursuing, no matter what it cost.`,
     email: "ruixu1114@gmail.com",
   },
   education:[{
@@ -88,6 +84,13 @@ export const SITE_CONTENT: SiteContent = {
     `,
     image: "/IMG_6458.jpg",
   },
+};
+
+export const PROFILE = {
+  name: "Ray Hsu 徐睿",
+  bio: "软件工程师，专注后台开发与系统设计。写代码，也写点东西。",
+  email: "ruixu1114@gmail.com",
+  github: "https://github.com/RayHsu232",
 };
 
 // #5755ff

@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import type { SiteConfig } from "@types";
 
 type Props = Pick<SiteConfig, "author" | "socialLinks">;
@@ -7,27 +8,25 @@ const { author, socialLinks } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer
-  class="w-full border-t border-neutral/20 px-5 pt-5 pb-8 text-center text-white"
->
-  <ul class="mb-5 flex flex-wrap justify-center gap-x-5 text-xs">
+<footer class="mt-10 w-full border-t border-line px-5 py-10 text-center">
+  <ul class="mb-6 flex flex-wrap justify-center gap-x-8 gap-y-3">
     {
       socialLinks.map(({ text, href }) => (
         <li>
           <a
             href={href}
             target="_blank"
-            class="inline-block px-4 py-3 after:relative after:bottom-[-4px] after:content-[url(/external.svg)] hover:text-primary"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
           >
+            <Icon name="ph:arrow-up-right" class="size-3.5" />
             {text}
           </a>
         </li>
       ))
     }
   </ul>
-  <p class="text-xs">
-    {author} © {currentYear}. <span class="text-neutral"
-      >Designed & Developed by</span
-    > Moisés Machuca
+  <p class="text-xs text-muted">
+    {author} © {currentYear} · Powered by Astro
   </p>
 </footer>

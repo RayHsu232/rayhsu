@@ -1,19 +1,31 @@
 ---
-import { SITE_CONTENT } from "@config";
-import Hero from "@components/Hero.astro";
 import Layout from "@layouts/Layout.astro";
-import Experience from "@components/Experience.astro";
-import Education from "@components/Education.astro";
-import Projects from "@components/Projects.astro";
-import About from "@components/About.astro";
+import PostCard from "@components/PostCard.astro";
+import SidebarProfile from "@components/SidebarProfile.astro";
+import { getPublishedPosts } from "@lib/content";
 
-import "../styles/global.css";
+const posts = await getPublishedPosts();
 ---
 
 <Layout>
-  <Hero {...SITE_CONTENT.hero} />
-  <Education education={SITE_CONTENT.education} />
-  <Experience experience={SITE_CONTENT.experience} />
-  <Projects projects={SITE_CONTENT.projects} />
-  <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
+  <div class="grid gap-10 py-10 md:grid-cols-[1fr_320px] md:py-14">
+    <section aria-label="文章列表" class="min-w-0">
+      <h1 class="mb-8 text-2xl font-bold tracking-tight text-ink md:text-3xl">
+        全部文章
+      </h1>
+      <div class="flex flex-col gap-5">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+      {
+        posts.length === 0 && (
+          <p class="rounded-2xl border border-line bg-surface p-8 text-center text-muted">
+            还没有文章，敬请期待。
+          </p>
+        )
+      }
+    </section>
+    <aside class="md:sticky md:top-24 md:self-start">
+      <SidebarProfile posts={posts} />
+    </aside>
+  </div>
 </Layout>

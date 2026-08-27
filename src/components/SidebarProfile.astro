@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import avatarImg from "../assets/avatar.png";
+import { Icon } from "astro-icon/components";
+import { PROFILE } from "@config";
+import { getStats } from "@utils/posts";
+import type { Post } from "@lib/content";
+
+type Props = { posts: Post[] };
+
+const { posts } = Astro.props;
+const stats = getStats(posts);
+---
+
+<div class="flex flex-col gap-5">
+  <div class="rounded-2xl border border-line bg-surface p-6 text-center">
+    <Image
+      src={avatarImg}
+      alt={PROFILE.name}
+      width="80"
+      height="80"
+      class="mx-auto mb-4 size-20 rounded-full object-cover"
+    />
+    <h2 class="mb-2 text-lg font-semibold text-ink">{PROFILE.name}</h2>
+    <p class="mb-5 text-sm leading-relaxed text-muted">{PROFILE.bio}</p>
+    <dl class="grid grid-cols-3 gap-2 border-t border-line pt-4 text-center">
+      <div>
+        <dt class="text-xs text-muted">文章</dt>
+        <dd class="text-lg font-semibold text-ink">{stats.posts}</dd>
+      </div>
+      <div>
+        <dt class="text-xs text-muted">分类</dt>
+        <dd class="text-lg font-semibold text-ink">{stats.categories}</dd>
+      </div>
+      <div>
+        <dt class="text-xs text-muted">标签</dt>
+        <dd class="text-lg font-semibold text-ink">{stats.tags}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="rounded-2xl border border-line bg-surface p-5">
+    <ul class="flex items-center justify-center gap-6">
+      <li>
+        <a
+          href={PROFILE.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="text-muted transition-colors hover:text-ink"
+        >
+          <Icon name="simple-icons:github" class="size-6" />
+        </a>
+      </li>
+      <li>
+        <a
+          href={`mailto:${PROFILE.email}`}
+          aria-label="邮箱"
+          class="text-muted transition-colors hover:text-ink"
+        >
+          <Icon name="ph:envelope-simple" class="size-6" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="/rss.xml"
+          aria-label="RSS 订阅"
+          class="text-muted transition-colors hover:text-ink"
+        >
+          <Icon name="ph:rss" class="size-6" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
