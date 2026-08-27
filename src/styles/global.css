@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@plugin "@tailwindcss/typography";
+
 @theme {
   --font-sans: "Geist Variable", "Noto Sans SC Variable", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-mono: "JetBrains Mono Variable", "Noto Sans SC Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -38,5 +40,17 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+@layer components {
+  .prose {
+    --tw-prose-links: var(--color-accent);
+  }
+  .prose code {
+    font-family: var(--font-mono);
+  }
+  .prose pre {
+    font-family: var(--font-mono);
   }
 }
