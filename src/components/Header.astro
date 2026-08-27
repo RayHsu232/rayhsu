@@ -6,6 +6,10 @@ import type { HeaderProps } from "@types";
 type Props = HeaderProps;
 
 const { siteLogo, navLinks } = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (href: string) =>
+  href === pathname || (href !== "/" && pathname.startsWith(href));
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-md">
@@ -40,7 +44,11 @@ const { siteLogo, navLinks } = Astro.props;
           navLinks.map((link) => (
             <li>
               <a
-                class="block rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-ink"
+                class:list={[
+                  "block rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-ink",
+                  isActive(link.href) && "text-ink",
+                ]}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 href={link.href}
               >
                 {link.text}

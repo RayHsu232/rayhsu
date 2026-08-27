@@ -1,17 +1,13 @@
 ---
-import { SITE_CONTENT } from "@config";
-import Hero from "@components/Hero.astro";
 import Layout from "@layouts/Layout.astro";
-import Experience from "@components/Experience.astro";
-import Education from "@components/Education.astro";
-import Projects from "@components/Projects.astro";
-import About from "@components/About.astro";
 ---
 
 <Layout>
-  <Hero {...SITE_CONTENT.hero} />
-  <Education education={SITE_CONTENT.education} />
-  <Experience experience={SITE_CONTENT.experience} />
-  <Projects projects={SITE_CONTENT.projects} />
-  <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
+  <div class="mx-auto max-w-3xl py-24 text-center">
+    <h1 class="mb-4 text-3xl font-bold tracking-tight text-ink">博客建设中</h1>
+    <p class="text-muted">
+      文章功能即将上线，先看看
+      <a class="text-accent hover:underline" href="/about/">关于我</a>。
+    </p>
+  </div>
 </Layout>
