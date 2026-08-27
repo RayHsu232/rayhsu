@@ -18,10 +18,13 @@ const {
   author,
   socialLinks,
   socialImage,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
 } = { ...SITE_CONFIG, ...Astro.props };
 
-const ogImgUrl = canonicalURL + socialImage;
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  SITE_CONFIG.canonicalURL || Astro.site,
+).href;
+const ogImgUrl = new URL(socialImage, canonicalURL).href;
 ---
 
 <!doctype html>
@@ -32,6 +35,7 @@ const ogImgUrl = canonicalURL + socialImage;
     <meta name="author" content={author} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
