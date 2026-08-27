@@ -45,8 +45,8 @@ const isActive = (href: string) =>
             <li>
               <a
                 class:list={[
-                  "block rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-ink",
-                  isActive(link.href) && "text-ink",
+                  "block rounded-full px-3 py-2 text-sm font-medium transition-colors hover:text-ink",
+                  isActive(link.href) ? "text-ink" : "text-muted",
                 ]}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 href={link.href}
