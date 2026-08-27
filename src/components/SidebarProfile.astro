@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import avatarImg from "../assets/avatar.png";
 import { Icon } from "astro-icon/components";
 import { PROFILE } from "@config";
 import { getStats } from "@utils/posts";
@@ -12,12 +14,12 @@ const stats = getStats(posts);
 
 <div class="flex flex-col gap-5">
   <div class="rounded-2xl border border-line bg-surface p-6 text-center">
-    <img
-      src={PROFILE.avatar}
+    <Image
+      src={avatarImg}
       alt={PROFILE.name}
-      class="mx-auto mb-4 size-20 rounded-full object-cover"
       width="80"
       height="80"
+      class="mx-auto mb-4 size-20 rounded-full object-cover"
     />
     <h2 class="mb-2 text-lg font-semibold text-ink">{PROFILE.name}</h2>
     <p class="mb-5 text-sm leading-relaxed text-muted">{PROFILE.bio}</p>

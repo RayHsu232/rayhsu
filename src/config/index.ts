@@ -14,7 +14,7 @@ export const SITE_CONFIG: SiteConfig = {
     { text: "GitHub", href: "https://github.com/RayHsu232" },
     { text: "Email", href: "mailto:ruixu1114@gmail.com" },
   ],
-  socialImage: "/avatar.png",
+  socialImage: "/og-image.jpg",
   canonicalURL: "https://www.rayhsu.tech",
 };
 
@@ -88,7 +88,6 @@ export const SITE_CONTENT: SiteContent = {
 
 export const PROFILE = {
   name: "Ray Hsu 徐睿",
-  avatar: "/avatar.png",
   bio: "软件工程师，专注后台开发与系统设计。写代码，也写点东西。",
   email: "ruixu1114@gmail.com",
   github: "https://github.com/RayHsu232",

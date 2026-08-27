@@ -68,7 +68,7 @@ describe("getStats", () => {
 
 describe("formatDate", () => {
   it("输出 YYYY-MM-DD，月日补零", () => {
-    expect(formatDate(new Date(2026, 7, 27))).toBe("2026-08-27");
-    expect(formatDate(new Date(2026, 0, 5))).toBe("2026-01-05");
+    expect(formatDate(new Date("2026-08-27T00:00:00Z"))).toBe("2026-08-27");
+    expect(formatDate(new Date("2026-01-05T00:00:00Z"))).toBe("2026-01-05");
   });
 });
