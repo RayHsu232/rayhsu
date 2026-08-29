@@ -54,3 +54,24 @@ export function formatDateCN(date: Date): string {
   const d = String(date.getUTCDate()).padStart(2, "0");
   return `${y}年${m}月${d}日`;
 }
+
+export function getReadingMinutes(body: string): number {
+  const withoutCode = body.replace(/```[\s\S]*?```/g, " ").replace(/`[^`]*`/g, " ");
+  const cjk = (withoutCode.match(/[\u4e00-\u9fff\u3040-\u30ff]/g) ?? []).length;
+  const latinWords = withoutCode.replace(/[\u4e00-\u9fff\u3040-\u30ff]/g, " ").split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(cjk / 350 + latinWords / 200));
+}
+
+export function getAdjacentPosts<T extends PostLike>(posts: T[], currentId: string): { prev: T | null; next: T | null } {
+  const index = posts.findIndex((p) => p.id === currentId);
+  if (index === -1) return { prev: null, next: null };
+  return { prev: posts[index + 1] ?? null, next: posts[index - 1] ?? null };
+}
+
+export function getRecommendedPosts<T extends PostLike>(posts: T[], current: T, count = 4): T[] {
+  const category = current.data.category;
+  const pool = posts.filter((p) => p.id !== current.id);
+  const sameCategory = category ? pool.filter((p) => p.data.category === category) : [];
+  const rest = pool.filter((p) => !sameCategory.includes(p));
+  return [...sameCategory, ...rest].slice(0, count);
+}
