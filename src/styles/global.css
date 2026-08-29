@@ -72,3 +72,16 @@ html[data-theme="dark"] {
     font-family: var(--font-mono);
   }
 }
+
+@layer components {
+  .dark-hidden {
+    html[data-theme="dark"] & {
+      display: none;
+    }
+  }
+  .light-hidden {
+    html:not([data-theme="dark"]) & {
+      display: none;
+    }
+  }
+}

@@ -1,18 +1,20 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Ray Hsu 徐睿",
+  title: "Ray Hsu 徐睿 | 来到异乡的异乡人",
   author: "Ray Hsu",
   description: "Ray Hsu 的个人博客：记录技术文章与随想。",
   lang: "zh-CN",
   siteLogo: "/webICon-personal.png",
+  brandName: "Ray Hsu 徐睿",
+  brandSubtitle: "来到异乡的异乡人",
   navLinks: [
     { text: "首页", href: "/" },
     { text: "关于我", href: "/about" },
+    { text: "RSS订阅", href: "/rss.xml" },
   ],
   socialLinks: [
     { text: "GitHub", href: "https://github.com/RayHsu232" },
-    { text: "Email", href: "mailto:ruixu1114@gmail.com" },
   ],
   socialImage: "/og-image.jpg",
   canonicalURL: "https://www.rayhsu.tech",
