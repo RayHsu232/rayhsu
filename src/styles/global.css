@@ -73,10 +73,10 @@ html[data-theme="dark"] {
   }
 }
 
-html[data-theme="dark"] .dark-hidden {
+html[data-theme="dark"] .icon-sun {
   display: none;
 }
-html:not([data-theme="dark"]) .light-hidden {
+html:not([data-theme="dark"]) .icon-moon {
   display: none;
 }
 
@@ -86,7 +86,6 @@ html[data-theme="dark"] .prose {
   --tw-prose-bold: var(--color-ink);
   --tw-prose-quotes: var(--color-ink);
   --tw-prose-code: var(--color-ink);
-  --tw-prose-pre-bg: var(--color-code);
   --tw-prose-pre-code: var(--color-ink);
   --tw-prose-hr: var(--color-line);
   --tw-prose-captions: var(--color-faint);
@@ -94,4 +93,22 @@ html[data-theme="dark"] .prose {
   --tw-prose-counters: var(--color-faint);
   --tw-prose-th-borders: var(--color-line);
   --tw-prose-td-borders: var(--color-hairline);
+}
+
+html:not([data-theme="dark"]) .astro-code,
+html:not([data-theme="dark"]) .astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
+html[data-theme="dark"] .astro-code,
+html[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
