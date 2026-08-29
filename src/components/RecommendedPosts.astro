@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+import { formatDateCN } from "@utils/posts";
+import type { Post } from "@lib/content";
+
+type Props = { posts: Post[] };
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length > 0 && (
+    <section class="my-6" aria-label="推荐阅读">
+      <h3 class="mb-3 flex items-center gap-1.5 text-[1rem] font-semibold text-ink">
+        <Icon name="ph:star" class="size-[18px] text-[#f0a020]" />
+        推荐阅读
+      </h3>
+      <div class="grid grid-cols-2 gap-2.5 max-md:grid-cols-1">
+        {posts.map((post) => (
+          <a href={`/posts/${post.id}/`} class="flex flex-col gap-1.5 border-b border-hairline py-2.5 no-underline">
+            <span class="line-clamp-2 text-sm font-medium leading-snug text-ink transition-colors duration-200 hover:text-brand">{post.data.title}</span>
+            <span class="flex items-center gap-2 text-xs text-faint">
+              {formatDateCN(post.data.date)}
+              {post.data.category && <span class="rounded bg-chip px-1.5 py-px text-[0.6875rem] text-chip-ink">{post.data.category}</span>}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
