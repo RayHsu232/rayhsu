@@ -6,6 +6,7 @@ import Toc from "@components/Toc.astro";
 import PostAuthorCard from "@components/PostAuthorCard.astro";
 import RecommendedPosts from "@components/RecommendedPosts.astro";
 import PostSubscribeCta from "@components/PostSubscribeCta.astro";
+import Giscus from "@components/Giscus.astro";
 import { Icon } from "astro-icon/components";
 import { SITE_CONFIG } from "@config";
 import { getPublishedPosts } from "@lib/content";
@@ -111,6 +112,7 @@ const badge = "inline-block rounded-full bg-chip px-2.5 py-0.5 text-xs text-chip
 
         <RecommendedPosts posts={recommended} />
         <PostSubscribeCta />
+        <Giscus />
       </footer>
     </article>
 
