@@ -8,6 +8,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://www.rayhsu.tech",
   markdown: {
+    remarkPlugins: [(await import("remark-math")).default],
+    rehypePlugins: [(await import("rehype-katex")).default],
     shikiConfig: {
       themes: { light: "github-light", dark: "github-dark" },
       defaultColor: false,

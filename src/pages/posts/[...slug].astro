@@ -10,6 +10,7 @@ import { Icon } from "astro-icon/components";
 import { SITE_CONFIG } from "@config";
 import { getPublishedPosts } from "@lib/content";
 import { getReadingMinutes, getAdjacentPosts, getRecommendedPosts, formatDateCN } from "@utils/posts";
+import "katex/dist/katex.min.css";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.draft);
