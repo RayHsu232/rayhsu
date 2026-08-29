@@ -1,12 +1,13 @@
 <div class="my-8 rounded-xl border border-hairline bg-elevated p-6 text-center">
   <p class="mb-4 text-[1rem] text-ink">📬 喜欢这篇文章？订阅邮件，第一时间收到新文章。</p>
-  <form id="post-subscribe-form" class="mx-auto flex max-w-[400px] gap-2">
+  <form data-subscribe class="mx-auto flex max-w-[400px] gap-2">
     <input
       type="email"
       required
       placeholder="your@email.com"
       class="min-w-0 flex-1 rounded-lg border border-line bg-base px-3 py-2 text-sm text-ink outline-none transition-colors duration-200 placeholder:text-faint focus:border-brand"
     />
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
     <button
       type="submit"
       class="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-base transition-opacity duration-200 hover:opacity-90"
@@ -14,14 +15,13 @@
       订阅
     </button>
   </form>
-  <p id="post-subscribe-msg" class="mt-2 hidden text-[0.8rem] text-subtle">订阅功能即将上线，敬请期待。</p>
+  <p data-subscribe-msg class="mt-2 hidden text-[0.8rem] text-subtle"></p>
 </div>
 
 <script>
-  const form = document.querySelector<HTMLFormElement>("#post-subscribe-form");
-  const msg = document.querySelector<HTMLElement>("#post-subscribe-msg");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    msg?.classList.remove("hidden");
-  });
+  import { wireSubscribe } from "../scripts/subscribe";
+
+  const form = document.querySelector<HTMLFormElement>("[data-subscribe]");
+  const msg = document.querySelector<HTMLElement>("[data-subscribe-msg]");
+  if (form && msg) wireSubscribe(form, msg);
 </script>

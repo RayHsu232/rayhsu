@@ -1,0 +1,41 @@
+<section id="comments" class="mt-12 border-t border-hairline pt-8" aria-label="评论">
+  <script is:inline src="https://giscus.app/client.js"
+    data-repo="RayHsu232/rayhsu"
+    data-repo-id="R_kgDOQE-stA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQE-stM4DEdTb"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async></script>
+</section>
+
+<script>
+  const GISCUS_ORIGIN = "https://giscus.app";
+  const giscusWindow = () =>
+    (document.querySelector("iframe.giscus-frame") as HTMLIFrameElement | null)?.contentWindow;
+
+  const applyTheme = () => {
+    const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    giscusWindow()?.postMessage({ giscus: { setConfig: { theme } } }, GISCUS_ORIGIN);
+  };
+
+  const init = () => {
+    applyTheme();
+    new MutationObserver(applyTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  };
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    setTimeout(init, 800);
+  } else {
+    window.addEventListener("DOMContentLoaded", () => setTimeout(init, 800));
+  }
+</script>

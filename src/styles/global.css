@@ -140,3 +140,10 @@ html[data-theme="dark"] .wechat-qr-light {
 html:not([data-theme="dark"]) .wechat-qr-dark {
   display: none;
 }
+
+.subscribe-success {
+  color: #059669;
+}
+.subscribe-error {
+  color: #dc2626;
+}
