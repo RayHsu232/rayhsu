@@ -1,0 +1,116 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div id="search-modal" class="fixed inset-0 z-100 hidden justify-center bg-black/50 px-4 pt-[10vh] backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="搜索文章">
+  <div class="w-full max-w-2xl overflow-hidden rounded-xl border border-line bg-base shadow-2xl">
+    <div class="flex items-center gap-2 border-b border-hairline px-4 py-3">
+      <Icon name="ph:magnifying-glass" class="size-5 shrink-0 text-faint" />
+      <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off"
+        class="flex-1 border-none bg-transparent text-base text-ink outline-none placeholder:text-faint" />
+      <kbd class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-xs text-faint">Esc</kbd>
+    </div>
+    <div id="search-results" class="max-h-[60vh] overflow-y-auto p-2"></div>
+  </div>
+</div>
+
+<style>
+  #search-modal.is-open {
+    display: flex;
+  }
+  /* 结果条目由 innerHTML 运行时注入，无 astro scope 属性，需 :global 才能命中 */
+  :global(.search-result-item) {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+  :global(.search-result-item:hover),
+  :global(.search-result-item:focus-visible) {
+    background: var(--color-elevated);
+    outline: none;
+  }
+  :global(.result-title) {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+  :global(.result-desc) {
+    margin-top: 2px;
+    font-size: 0.8rem;
+    color: var(--color-subtle);
+  }
+  :global(.result-desc mark) {
+    background: var(--color-brand-soft);
+    color: var(--color-brand);
+  }
+</style>
+
+<script>
+  type PagefindHit = { url: string; meta?: { title?: string }; excerpt: string };
+
+  const modal = document.querySelector<HTMLElement>("#search-modal")!;
+  const input = document.querySelector<HTMLInputElement>("#search-input")!;
+  const results = document.querySelector<HTMLElement>("#search-results")!;
+
+  let pagefind: {
+    search(q: string): Promise<{ results: { data(): Promise<PagefindHit> }[] }>;
+    addFilter?(key: string, value?: string): void;
+  } | null = null;
+
+  async function loadPagefind() {
+    if (pagefind) return pagefind;
+    try {
+      const pagefindUrl = "/pagefind/pagefind.js";
+      pagefind = await import(/* @vite-ignore */ pagefindUrl);
+    } catch {
+      return null;
+    }
+    return pagefind;
+  }
+
+  function openModal() {
+    modal.classList.add("is-open");
+    input.focus();
+  }
+  function closeModal() {
+    modal.classList.remove("is-open");
+    input.value = "";
+    results.innerHTML = "";
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      modal.classList.contains("is-open") ? closeModal() : openModal();
+    }
+    if (e.key === "Escape") closeModal();
+  });
+  window.addEventListener("open-search", openModal);
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  input.addEventListener("input", async () => {
+    const pf = await loadPagefind();
+    if (!pf) {
+      results.innerHTML = `<p class="p-6 text-center text-sm text-faint">搜索索引仅在生产构建后可用（本地请先 pnpm build）。</p>`;
+      return;
+    }
+    const q = input.value.trim();
+    if (!q) {
+      results.innerHTML = "";
+      return;
+    }
+    const res = await pf.search(q);
+    const items = await Promise.all(res.results.slice(0, 10).map((r: { data(): Promise<PagefindHit> }) => r.data()));
+    results.innerHTML = items
+      .map(
+        (d) => `<a class="search-result-item" href="${d.url}">
+          <span class="result-title">${d.meta?.title ?? d.url}</span>
+          <span class="result-desc">${d.excerpt}</span>
+        </a>`,
+      )
+      .join("");
+  });
+</script>

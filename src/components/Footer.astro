@@ -1,32 +1,11 @@
 ---
-import { Icon } from "astro-icon/components";
-import type { SiteConfig } from "@types";
-
-type Props = Pick<SiteConfig, "author" | "socialLinks">;
-
-const { author, socialLinks } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-10 w-full border-t border-line px-5 py-10 text-center">
-  <ul class="mb-6 flex flex-wrap justify-center gap-x-8 gap-y-3">
-    {
-      socialLinks.map(({ text, href }) => (
-        <li>
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
-          >
-            <Icon name="ph:arrow-up-right" class="size-3.5" />
-            {text}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <p class="text-xs text-muted">
-    {author} © {currentYear} · Powered by Astro
+<footer class="border-t border-hairline p-6 text-center text-sm text-faint">
+  <p>
+    © <a href="/" class="text-subtle hover:text-brand">Ray Hsu 徐睿</a>
+    · <span>{currentYear}</span>
+    · Powered by <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-subtle hover:text-brand">Astro</a>
   </p>
 </footer>

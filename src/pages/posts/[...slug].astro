@@ -17,15 +17,15 @@ const { Content } = await render(post);
 ---
 
 <Layout title={`${post.data.title} · Ray Hsu`} description={post.data.description}>
-  <article class="mx-auto w-full max-w-3xl py-10 md:py-14">
+  <article class="mx-auto w-full max-w-3xl px-6 py-10 max-md:px-4 md:py-14">
     <header class="mb-10">
-      <div class="mb-3 flex items-center gap-3 text-sm text-muted">
+      <div class="mb-3 flex items-center gap-3 text-sm text-subtle">
         <time datetime={post.data.date.toISOString()}>
           {formatDate(post.data.date)}
         </time>
         {
           post.data.category && (
-            <span class="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs text-accent">
+            <span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs text-brand">
               {post.data.category}
             </span>
           )
@@ -48,7 +48,7 @@ const { Content } = await render(post);
         older ? (
           <a
             href={`/posts/${older.id}/`}
-            class="rounded-2xl border border-line bg-surface p-4 text-sm text-muted transition-colors hover:border-accent hover:text-ink"
+            class="rounded-2xl border border-line bg-elevated p-4 text-sm text-subtle transition-colors hover:border-brand hover:text-ink"
           >
             ← 较早：{older.data.title}
           </a>
@@ -60,7 +60,7 @@ const { Content } = await render(post);
         newer ? (
           <a
             href={`/posts/${newer.id}/`}
-            class="rounded-2xl border border-line bg-surface p-4 text-right text-sm text-muted transition-colors hover:border-accent hover:text-ink"
+            class="rounded-2xl border border-line bg-elevated p-4 text-right text-sm text-subtle transition-colors hover:border-brand hover:text-ink"
           >
             较新：{newer.data.title} →
           </a>

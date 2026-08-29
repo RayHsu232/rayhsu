@@ -8,7 +8,7 @@ const posts = await getPublishedPosts();
 ---
 
 <Layout>
-  <div class="grid gap-10 py-10 md:grid-cols-[1fr_320px] md:py-14">
+  <div class="mx-auto grid max-w-[1100px] gap-10 px-6 py-10 max-md:px-4 md:grid-cols-[1fr_320px] md:py-14">
     <section aria-label="文章列表" class="min-w-0">
       <h1 class="mb-8 text-2xl font-bold tracking-tight text-ink md:text-3xl">
         全部文章
@@ -18,7 +18,7 @@ const posts = await getPublishedPosts();
       </div>
       {
         posts.length === 0 && (
-          <p class="rounded-2xl border border-line bg-surface p-8 text-center text-muted">
+          <p class="rounded-2xl border border-line bg-elevated p-8 text-center text-subtle">
             还没有文章，敬请期待。
           </p>
         )

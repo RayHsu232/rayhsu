@@ -14,17 +14,17 @@ const { projects } = Astro.props;
 <Section text="项目经历" href="projects">
   {
     projects.map(({ name, summary, image, linkPreview, linkSource }) => (
-      <div class="mb-6 overflow-hidden rounded-2xl border border-line bg-surface">
+      <div class="mb-6 overflow-hidden rounded-2xl border border-line bg-elevated">
         <div class="grid grid-rows-2 sm:grid-cols-2 sm:grid-rows-1">
           <div class="p-6">
-            <h3 class="mb-4 text-xl font-semibold text-accent">{name}</h3>
-            <p class="mb-8 text-sm leading-relaxed text-muted">{summary}</p>
+            <h3 class="mb-4 text-xl font-semibold text-brand">{name}</h3>
+            <p class="mb-8 text-sm leading-relaxed text-subtle">{summary}</p>
             <div class="flex gap-5 text-sm font-medium">
               <a
                 href={linkSource}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1 text-accent hover:underline"
+                class="inline-flex items-center gap-1 text-brand hover:underline"
               >
                 <Icon name="ph:code" class="size-4" />
                 Source
@@ -33,7 +33,7 @@ const { projects } = Astro.props;
                 href={linkPreview}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1 text-accent hover:underline"
+                class="inline-flex items-center gap-1 text-brand hover:underline"
               >
                 <Icon name="ph:arrow-up-right" class="size-4" />
                 Preview

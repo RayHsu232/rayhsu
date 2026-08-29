@@ -6,19 +6,15 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
+import BackToTop from "@components/BackToTop.astro";
+import SearchModal from "@components/SearchModal.astro";
 
 type Props = { title?: string; description?: string };
 
-const {
-  title,
-  description,
-  siteLogo,
-  navLinks,
-  lang,
-  author,
-  socialLinks,
-  socialImage,
-} = { ...SITE_CONFIG, ...Astro.props };
+const { title, description, lang, author, socialImage } = {
+  ...SITE_CONFIG,
+  ...Astro.props,
+};
 
 const canonicalURL = new URL(
   Astro.url.pathname,
@@ -28,8 +24,14 @@ const ogImgUrl = new URL(socialImage, canonicalURL).href;
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-pt-24 scroll-smooth">
+<html lang={lang} class="scroll-pt-24 scroll-smooth" data-theme="light">
   <head>
+    <script is:inline>
+      try {
+        const t = localStorage.getItem("theme") ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
@@ -51,11 +53,13 @@ const ogImgUrl = new URL(socialImage, canonicalURL).href;
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImgUrl} />
   </head>
-  <body class="bg-canvas font-sans text-ink antialiased">
-    <Header siteLogo={siteLogo} navLinks={navLinks} />
-    <main class="mx-auto w-full max-w-6xl px-5">
+  <body class="bg-base font-sans text-ink antialiased">
+    <Header />
+    <main class="mt-14">
       <slot />
     </main>
-    <Footer author={author} socialLinks={socialLinks} />
+    <BackToTop />
+    <Footer />
+    <SearchModal />
   </body>
 </html>
