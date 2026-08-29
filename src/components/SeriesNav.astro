@@ -1,0 +1,98 @@
+---
+import { getPublishedPosts } from "@lib/content";
+import { Icon } from "astro-icon/components";
+
+type Props = { currentId: string; currentCategory?: string };
+
+const { currentId, currentCategory } = Astro.props;
+const posts = await getPublishedPosts();
+
+type Group = { name: string; posts: { id: string; title: string; href: string }[] };
+const groupsMap = new Map<string, Group>();
+for (const post of posts) {
+  const name = post.data.category ?? "未分类";
+  if (!groupsMap.has(name)) groupsMap.set(name, { name, posts: [] });
+  groupsMap.get(name)!.posts.push({ id: post.id, title: post.data.title, href: `/posts/${post.id}/` });
+}
+const groups = [...groupsMap.values()].sort((a, b) => {
+  if (a.name === currentCategory) return -1;
+  if (b.name === currentCategory) return 1;
+  if (a.name === "未分类") return 1;
+  if (b.name === "未分类") return -1;
+  return a.name.localeCompare(b.name, "zh-Hans-CN");
+});
+---
+
+<div class="flex flex-col gap-1">
+  <button
+    type="button"
+    id="series-toggle"
+    class="fixed bottom-20 left-4 z-100 hidden size-10 items-center justify-center rounded-full border border-line bg-base text-ink shadow-[0_2px_8px_var(--card-shadow)] max-md:flex"
+    aria-label="切换系列导航"
+    aria-expanded="false"
+  >
+    <Icon name="ph:list" class="size-5" />
+  </button>
+
+  <nav id="series-nav" class="scroller flex flex-col gap-1 text-sm" aria-label="系列导航">
+    {
+      groups.map((group) => {
+        const isCurrent = group.name === currentCategory;
+        return (
+          <div class:list={["group", { "is-expanded": isCurrent }]}>
+            <button
+              type="button"
+              class="group-title flex w-full flex-wrap items-start gap-1 rounded-md px-3 py-1.5 text-left text-sm font-semibold break-words text-ink transition-colors duration-200 hover:bg-elevated"
+              aria-expanded={isCurrent ? "true" : "false"}
+            >
+              <Icon name="ph:caret-right" class="arrow mt-0.5 size-4 shrink-0 text-faint transition-transform duration-200" />
+              <span>{group.name}</span>
+              <span class="ml-auto rounded-[10px] bg-sunken px-1.5 text-xs leading-5 text-faint">{group.posts.length}</span>
+            </button>
+            <ul class="item-list hidden pl-2">
+              {group.posts.map((post) => (
+                <li>
+                  <a
+                    href={post.href}
+                    title={post.title}
+                    class:list={[
+                      "block rounded-md py-1 pl-6 pr-3 text-[0.8125rem] leading-normal break-words text-subtle transition-colors duration-200 hover:bg-elevated hover:text-ink",
+                      post.id === currentId && "is-active bg-brand-soft font-medium text-brand",
+                    ]}
+                  >
+                    {post.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    }
+  </nav>
+</div>
+
+<script>
+  import "../styles/series-nav.css";
+
+  const toggle = document.querySelector<HTMLButtonElement>("#series-toggle");
+  const nav = document.querySelector<HTMLElement>("#series-nav");
+  toggle?.addEventListener("click", () => {
+    const open = nav?.classList.toggle("is-open") ?? false;
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+  document.addEventListener("click", (e) => {
+    if (!nav?.classList.contains("is-open")) return;
+    if (e.target instanceof Node && (nav.contains(e.target) || toggle?.contains(e.target))) return;
+    nav.classList.remove("is-open");
+    toggle?.setAttribute("aria-expanded", "false");
+  });
+  document.querySelectorAll<HTMLButtonElement>(".group-title").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest(".group");
+      if (!group) return;
+      const expanded = group.classList.toggle("is-expanded");
+      btn.setAttribute("aria-expanded", String(expanded));
+    });
+  });
+</script>
