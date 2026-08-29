@@ -18,7 +18,7 @@ const toList = (s: string | string[]) => (Array.isArray(s) ? s : [s]);
     <h1 class="mb-3 text-[1.75rem] font-bold leading-tight">关于我</h1>
 
     <div class="prose max-w-none">
-      <p>{about.description}</p>
+      <p class="whitespace-pre-line">{about.description}</p>
       <p><img src={about.image} alt={hero.name} width="480" class="rounded-lg" /></p>
       <h2>教育经历</h2>
       <ul>
