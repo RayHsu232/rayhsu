@@ -9,7 +9,8 @@ export default defineConfig({
   site: "https://www.rayhsu.tech",
   markdown: {
     shikiConfig: {
-      theme: "github-light",
+      themes: { light: "github-light", dark: "github-dark" },
+      defaultColor: false,
     },
   },
   integrations: [sitemap(), icon()],
