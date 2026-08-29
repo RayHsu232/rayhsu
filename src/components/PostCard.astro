@@ -1,47 +1,59 @@
 ---
-import { formatDate } from "@utils/posts";
+import { Icon } from "astro-icon/components";
+import { formatDateCN } from "@utils/posts";
 import type { Post } from "@lib/content";
 
 type Props = { post: Post };
 
 const { post } = Astro.props;
+const postUrl = `/posts/${post.id}/`;
 ---
 
 <article
-  class="group rounded-2xl border border-line bg-elevated p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm"
+  class="mb-3 rounded-xl border border-hairline bg-elevated px-6 py-5 transition-colors duration-200 hover:border-line max-md:mb-2 max-md:rounded-lg max-md:p-4"
 >
-  <div class="mb-2 flex items-center gap-3 text-sm text-subtle">
-    <time datetime={post.data.date.toISOString()}>
-      {formatDate(post.data.date)}
-    </time>
+  <h2
+    class="mb-1.5 text-[1.2rem] leading-snug font-semibold max-md:text-[1.05rem]"
+  >
+    <a
+      href={postUrl}
+      class="text-ink transition-colors duration-200 hover:text-brand"
+      >{post.data.title}</a
+    >
+  </h2>
+  <p class="mb-2 line-clamp-2 text-sm text-subtle max-md:text-[0.8125rem]">
+    {post.data.description}
+  </p>
+  <div
+    class="flex flex-wrap items-center gap-2 text-[0.8125rem] text-faint max-md:text-xs"
+  >
+    <time datetime={post.data.date.toISOString()}
+      >{formatDateCN(post.data.date)}</time
+    >
     {
       post.data.category && (
-        <span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs text-brand">
-          {post.data.category}
+        <span class="inline-flex items-center gap-1">
+          <Icon name="ph:folder-open" class="size-3.5 shrink-0" />
+          <span class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink">
+            {post.data.category}
+          </span>
+        </span>
+      )
+    }
+    {
+      post.data.tags.length > 0 && (
+        <span class="inline-flex items-center gap-1">
+          <Icon name="ph:tag" class="size-3.5 shrink-0" />
+          {post.data.tags.map((tag) => (
+            <a
+              href={`/tags/${tag}/`}
+              class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink transition-colors duration-200 hover:text-brand"
+            >
+              {tag}
+            </a>
+          ))}
         </span>
       )
     }
   </div>
-  <h2 class="mb-2 text-lg font-semibold text-ink md:text-xl">
-    <a href={`/posts/${post.id}/`} class="transition-colors group-hover:text-brand">
-      {post.data.title}
-    </a>
-  </h2>
-  <p class="mb-4 line-clamp-2 text-sm leading-relaxed text-subtle">
-    {post.data.description}
-  </p>
-  {
-    post.data.tags.length > 0 && (
-      <div class="flex flex-wrap gap-2">
-        {post.data.tags.map((tag) => (
-          <a
-            href={`/tags/${tag}/`}
-            class="rounded-full border border-line px-2.5 py-0.5 text-xs text-subtle transition-colors hover:border-brand hover:text-brand"
-          >
-            {tag}
-          </a>
-        ))}
-      </div>
-    )
-  }
 </article>
