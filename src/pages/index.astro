@@ -1,7 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PostCard from "@components/PostCard.astro";
-import SidebarProfile from "@components/SidebarProfile.astro";
 import { getPublishedPosts } from "@lib/content";
 
 const posts = await getPublishedPosts();
@@ -24,8 +23,6 @@ const posts = await getPublishedPosts();
         )
       }
     </section>
-    <aside class="md:sticky md:top-24 md:self-start">
-      <SidebarProfile posts={posts} />
-    </aside>
+    <aside class="max-md:hidden md:sticky md:top-[88px] md:self-start" />
   </div>
 </Layout>
