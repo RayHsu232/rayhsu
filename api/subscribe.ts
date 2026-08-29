@@ -17,13 +17,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
   const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
-  if (!apiKey || !audienceId) {
+  if (!apiKey) {
     res.status(502).json({ ok: false, error: "服务未配置" });
     return;
   }
   try {
-    const upstream = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+    const upstream = await fetch("https://api.resend.com/contacts", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({ email, unsubscribed: false }),
