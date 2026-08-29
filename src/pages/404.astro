@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon/components";
+import Layout from "@layouts/Layout.astro";
+import { getPublishedPosts } from "@lib/content";
+import { SITE_CONFIG } from "@config";
+
+const posts = (await getPublishedPosts()).slice(0, 5);
+---
+
+<Layout title={`页面不存在 · ${SITE_CONFIG.brandName}`}>
+  <div class="mx-auto max-w-[520px] px-5 pb-10 pt-20 text-center">
+    <h1 class="mb-4 text-[6rem] font-extrabold leading-none text-faint">404</h1>
+    <p class="mb-8 text-lg text-subtle">页面不存在或已被移动，试试搜索？</p>
+    <button
+      type="button"
+      id="not-found-search-btn"
+      class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-base px-6 py-2.5 text-[0.9375rem] text-ink transition-all duration-200 hover:border-brand hover:shadow-[0_0_0_3px_var(--color-brand-soft)]"
+    >
+      <Icon name="ph:magnifying-glass" class="size-4" />
+      搜索文章
+    </button>
+    <div class="mt-6 flex justify-center gap-6 text-[0.9375rem]">
+      <a href="/" class="text-brand hover:underline">首页</a>
+      <a href="/archive/" class="text-brand hover:underline">归档</a>
+      <a href="/category/" class="text-brand hover:underline">分类</a>
+      <a href="/tag/" class="text-brand hover:underline">标签</a>
+    </div>
+    {
+      posts.length > 0 && (
+        <div class="mt-12 text-left">
+          <h2 class="mb-3 text-base text-subtle">最新文章</h2>
+          <ul class="m-0 list-none p-0">
+            {posts.map((post) => (
+              <li class="border-b border-hairline py-1.5">
+                <a href={`/posts/${post.id}/`} class="text-ink transition-colors duration-200 hover:text-brand">
+                  {post.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</Layout>
+
+<script>
+  document.querySelector("#not-found-search-btn")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("open-search"));
+  });
+</script>
