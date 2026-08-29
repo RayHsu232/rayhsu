@@ -51,7 +51,7 @@ const ogImgUrl = new URL(socialImage, canonicalURL).href;
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImgUrl} />
   </head>
-  <body class="bg-canvas font-sans text-ink antialiased">
+  <body class="bg-base font-sans text-ink antialiased">
     <Header siteLogo={siteLogo} navLinks={navLinks} />
     <main class="mx-auto w-full max-w-6xl px-5">
       <slot />

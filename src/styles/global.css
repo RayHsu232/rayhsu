@@ -72,11 +72,3 @@ html[data-theme="dark"] {
     font-family: var(--font-mono);
   }
 }
-
-@theme {
-  --color-canvas: var(--color-base);
-  --color-surface: var(--color-elevated);
-  --color-muted: var(--color-subtle);
-  --color-accent: var(--color-brand);
-  --color-accent-soft: var(--color-brand-soft);
-}
