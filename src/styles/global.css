@@ -73,15 +73,25 @@ html[data-theme="dark"] {
   }
 }
 
-@layer components {
-  .dark-hidden {
-    html[data-theme="dark"] & {
-      display: none;
-    }
-  }
-  .light-hidden {
-    html:not([data-theme="dark"]) & {
-      display: none;
-    }
-  }
+html[data-theme="dark"] .dark-hidden {
+  display: none;
+}
+html:not([data-theme="dark"]) .light-hidden {
+  display: none;
+}
+
+html[data-theme="dark"] .prose {
+  --tw-prose-body: var(--color-subtle);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-pre-bg: var(--color-code);
+  --tw-prose-pre-code: var(--color-ink);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-captions: var(--color-faint);
+  --tw-prose-bullets: var(--color-faint);
+  --tw-prose-counters: var(--color-faint);
+  --tw-prose-th-borders: var(--color-line);
+  --tw-prose-td-borders: var(--color-hairline);
 }

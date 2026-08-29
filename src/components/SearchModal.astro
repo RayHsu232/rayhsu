@@ -63,7 +63,6 @@ import { Icon } from "astro-icon/components";
     try {
       const pagefindUrl = "/pagefind/pagefind.js";
       pagefind = await import(/* @vite-ignore */ pagefindUrl);
-      pagefind!.addFilter?.("lang");
     } catch {
       return null;
     }
