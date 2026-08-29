@@ -119,3 +119,10 @@ html[data-theme="dark"] .astro-code span {
 html[data-theme="dark"] .topic-block:hover {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
+
+html[data-theme="dark"] .wechat-qr-light {
+  display: none;
+}
+html:not([data-theme="dark"]) .wechat-qr-dark {
+  display: none;
+}
