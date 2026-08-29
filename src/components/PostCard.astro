@@ -34,9 +34,12 @@ const postUrl = `/posts/${post.id}/`;
       post.data.category && (
         <span class="inline-flex items-center gap-1">
           <Icon name="ph:folder-open" class="size-3.5 shrink-0" />
-          <span class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink">
+          <a
+            href={`/category/${post.data.category}/`}
+            class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink transition-opacity duration-200 hover:opacity-80"
+          >
             {post.data.category}
-          </span>
+          </a>
         </span>
       )
     }
@@ -46,8 +49,8 @@ const postUrl = `/posts/${post.id}/`;
           <Icon name="ph:tag" class="size-3.5 shrink-0" />
           {post.data.tags.map((tag) => (
             <a
-              href={`/tags/${tag}/`}
-              class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink transition-colors duration-200 hover:text-brand"
+              href={`/tag/${tag}/`}
+              class="rounded-full bg-chip px-2 py-px text-[0.7rem] text-chip-ink transition-opacity duration-200 hover:opacity-80"
             >
               {tag}
             </a>

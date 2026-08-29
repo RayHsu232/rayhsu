@@ -1,19 +1,54 @@
 ---
-import { SITE_CONTENT } from "@config";
-import Hero from "@components/Hero.astro";
 import Layout from "@layouts/Layout.astro";
-import Experience from "@components/Experience.astro";
-import Education from "@components/Education.astro";
-import Projects from "@components/Projects.astro";
-import AboutSection from "@components/About.astro";
+import { SITE_CONFIG, SITE_CONTENT } from "@config";
+
+const { about, hero, education, experience, projects } = SITE_CONTENT;
+
+const toList = (s: string | string[]) => (Array.isArray(s) ? s : [s]);
 ---
 
-<Layout title="关于我 · Ray Hsu">
-  <div class="mx-auto w-full max-w-3xl px-6 py-8 max-md:px-4">
-    <Hero {...SITE_CONTENT.hero} />
-    <Education education={SITE_CONTENT.education} />
-    <Experience experience={SITE_CONTENT.experience} />
-    <Projects projects={SITE_CONTENT.projects} />
-    <AboutSection {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
-  </div>
+<Layout title={`关于我 · ${SITE_CONFIG.brandName}`}>
+  <article class="mx-auto w-full max-w-[800px] px-6 py-8 max-md:px-4">
+    <nav class="mb-4 text-[0.8125rem] text-faint" aria-label="面包屑">
+      <a href="/" class="text-subtle transition-colors duration-200 hover:text-brand">Home</a>
+      <span class="mx-1.5">&gt;</span>
+      <span>关于我</span>
+    </nav>
+
+    <h1 class="mb-3 text-[1.75rem] font-bold leading-tight">关于我</h1>
+
+    <div class="prose max-w-none">
+      <p class="whitespace-pre-line">{about.description}</p>
+      <p><img src={about.image} alt={hero.name} width="480" class="rounded-lg" /></p>
+      <h2>教育经历</h2>
+      <ul>
+        {education.map((e) => (
+          <li>
+            <strong>{e.school}</strong> · {e.department}（{e.startDate} ~ {e.endDate}）
+            <ul>{toList(e.summary).map((s) => <li>{s}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+      <h2>工作经历</h2>
+      <ul>
+        {experience.map((e) => (
+          <li>
+            <strong>{e.company}</strong> · {e.position}（{e.startDate} ~ {e.endDate}）
+            <ul>{toList(e.summary).map((s) => <li>{s}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+      <h2>项目</h2>
+      <ul>
+        {projects.map((p) => (
+          <li>
+            <strong>{p.name}</strong>：{p.summary}
+            {p.linkSource && p.linkSource !== "/" && (
+              <a href={p.linkSource} target="_blank" rel="noopener noreferrer">源码</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </article>
 </Layout>

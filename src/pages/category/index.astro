@@ -1,0 +1,29 @@
+---
+import Layout from "@layouts/Layout.astro";
+import AuthorCard from "@components/AuthorCard.astro";
+import TaxonomyCloud from "@components/TaxonomyCloud.astro";
+import { getPublishedPosts } from "@lib/content";
+import { SITE_CONFIG } from "@config";
+
+const posts = await getPublishedPosts();
+const counts = new Map<string, number>();
+for (const post of posts) {
+  if (!post.data.category) continue;
+  counts.set(post.data.category, (counts.get(post.data.category) ?? 0) + 1);
+}
+const items = [...counts.entries()]
+  .map(([name, count]) => ({ name, href: `/category/${name}/`, count }))
+  .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "zh-Hans-CN"));
+---
+
+<Layout title={`分类 · ${SITE_CONFIG.brandName}`}>
+  <div class="mx-auto grid max-w-[1100px] grid-cols-[1fr_300px] items-start gap-10 px-6 py-8 max-md:grid-cols-1 max-md:gap-0 max-md:p-4">
+    <section class="min-w-0" aria-label="分类">
+      <h1 class="mb-6 text-2xl font-bold">分类</h1>
+      {items.length > 0 ? <TaxonomyCloud items={items} hint="选择一个分类查看相关文章" /> : <p class="text-sm text-faint">还没有分类。</p>}
+    </section>
+    <aside class="sticky top-[88px] self-start max-md:hidden">
+      <AuthorCard />
+    </aside>
+  </div>
+</Layout>

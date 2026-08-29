@@ -1,0 +1,27 @@
+---
+type Item = { name: string; href: string; count: number };
+type Props = { items: Item[]; active?: string; hint: string };
+
+const { items, active, hint } = Astro.props;
+const badge =
+  "inline-flex items-center gap-1.5 rounded-[20px] border border-hairline bg-elevated px-3.5 py-1.5 text-sm text-ink transition-colors duration-200 hover:border-brand hover:text-brand";
+const activeBadge =
+  "inline-flex items-center gap-1.5 rounded-[20px] border border-brand bg-brand px-3.5 py-1.5 text-sm text-base";
+---
+
+<div class="mb-8 flex flex-wrap gap-2 border-b border-hairline pb-6">
+  {
+    items.map((item) =>
+      item.name === active ? (
+        <a href={item.href} class={activeBadge} aria-current="page">
+          {item.name} <span class="text-xs opacity-80">{item.count}</span>
+        </a>
+      ) : (
+        <a href={item.href} class={badge}>
+          {item.name} <span class="text-xs text-faint">{item.count}</span>
+        </a>
+      ),
+    )
+  }
+</div>
+<p class="text-sm text-faint">{hint}</p>

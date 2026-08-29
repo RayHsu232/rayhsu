@@ -1,0 +1,48 @@
+---
+import Layout from "@layouts/Layout.astro";
+import AuthorCard from "@components/AuthorCard.astro";
+import { getPublishedPosts } from "@lib/content";
+import { SITE_CONFIG } from "@config";
+
+const posts = await getPublishedPosts();
+const years = new Map<number, typeof posts>();
+for (const post of posts) {
+  const y = post.data.date.getUTCFullYear();
+  if (!years.has(y)) years.set(y, []);
+  years.get(y)!.push(post);
+}
+const groupLabel = "mb-3 text-xl font-semibold pb-2 border-b border-hairline";
+const itemLabel = "flex items-baseline gap-4 py-1.5";
+---
+
+<Layout title={`归档 · ${SITE_CONFIG.brandName}`}>
+  <div class="mx-auto grid max-w-[1100px] grid-cols-[1fr_300px] items-start gap-10 px-6 py-8 max-md:grid-cols-1 max-md:gap-0 max-md:p-4">
+    <section class="min-w-0" aria-label="归档">
+      <h1 class="mb-6 text-2xl font-bold">
+        归档 <span class="text-sm font-normal text-subtle">共 {posts.length} 篇</span>
+      </h1>
+      {
+        [...years.entries()].map(([year, yearPosts]) => (
+          <section class="mb-8">
+            <h2 class={groupLabel}>{year}</h2>
+            <ul class="m-0 list-none p-0">
+              {yearPosts.map((post) => (
+                <li class={itemLabel}>
+                  <time datetime={post.data.date.toISOString()} class="w-[50px] shrink-0 font-mono text-[0.8125rem] text-faint">
+                    {String(post.data.date.getUTCMonth() + 1).padStart(2, "0")}-{String(post.data.date.getUTCDate()).padStart(2, "0")}
+                  </time>
+                  <a href={`/posts/${post.id}/`} class="text-[0.9375rem] text-ink transition-colors duration-200 hover:text-brand">
+                    {post.data.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </section>
+    <aside class="sticky top-[88px] self-start max-md:hidden">
+      <AuthorCard />
+    </aside>
+  </div>
+</Layout>

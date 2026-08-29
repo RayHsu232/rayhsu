@@ -59,7 +59,7 @@ const badge = "inline-block rounded-full bg-chip px-2.5 py-0.5 text-xs text-chip
             post.data.category && (
               <span class="inline-flex items-center gap-1">
                 <Icon name="ph:folder-open" class="size-3.5 opacity-60" />
-                <span class={badge}>{post.data.category}</span>
+                <a href={`/category/${post.data.category}/`} class={badge}>{post.data.category}</a>
               </span>
             )
           }
@@ -68,7 +68,7 @@ const badge = "inline-block rounded-full bg-chip px-2.5 py-0.5 text-xs text-chip
               <span class="inline-flex flex-wrap items-center gap-1">
                 <Icon name="ph:tag" class="size-3.5 opacity-60" />
                 {post.data.tags.map((tag) => (
-                  <a href={`/tags/${tag}/`} class={badge}>
+                  <a href={`/tag/${tag}/`} class={badge}>
                     {tag}
                   </a>
                 ))}
