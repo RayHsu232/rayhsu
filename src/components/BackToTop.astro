@@ -1,0 +1,23 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  id="back-to-top"
+  class="fixed right-6 bottom-6 z-50 hidden size-10 items-center justify-center rounded-full border border-line bg-base text-ink shadow-[0_2px_8px_var(--card-shadow)] transition-colors duration-200 hover:border-brand"
+  aria-label="返回顶部"
+>
+  <Icon name="ph:arrow-up" class="size-6" />
+</button>
+
+<script>
+  const btn = document.querySelector("#back-to-top")!;
+  const sentinel = document.createElement("div");
+  sentinel.style.cssText = "position:absolute;top:0;height:1px;width:1px;";
+  document.body.prepend(sentinel);
+  new IntersectionObserver(([e]) => {
+    btn.classList.toggle("hidden", e.isIntersecting);
+    btn.classList.toggle("flex", !e.isIntersecting);
+  }).observe(sentinel);
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>

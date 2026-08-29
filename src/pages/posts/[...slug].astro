@@ -17,7 +17,7 @@ const { Content } = await render(post);
 ---
 
 <Layout title={`${post.data.title} · Ray Hsu`} description={post.data.description}>
-  <article class="mx-auto w-full max-w-3xl py-10 md:py-14">
+  <article class="mx-auto w-full max-w-3xl px-6 py-10 max-md:px-4 md:py-14">
     <header class="mb-10">
       <div class="mb-3 flex items-center gap-3 text-sm text-subtle">
         <time datetime={post.data.date.toISOString()}>

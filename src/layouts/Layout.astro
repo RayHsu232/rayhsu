@@ -6,20 +6,15 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
+import BackToTop from "@components/BackToTop.astro";
 import SearchModal from "@components/SearchModal.astro";
 
 type Props = { title?: string; description?: string };
 
-const {
-  title,
-  description,
-  siteLogo,
-  navLinks,
-  lang,
-  author,
-  socialLinks,
-  socialImage,
-} = { ...SITE_CONFIG, ...Astro.props };
+const { title, description, lang, author, socialImage } = {
+  ...SITE_CONFIG,
+  ...Astro.props,
+};
 
 const canonicalURL = new URL(
   Astro.url.pathname,
@@ -57,11 +52,12 @@ const ogImgUrl = new URL(socialImage, canonicalURL).href;
     <meta property="twitter:image" content={ogImgUrl} />
   </head>
   <body class="bg-base font-sans text-ink antialiased">
-    <Header siteLogo={siteLogo} navLinks={navLinks} />
-    <main class="mx-auto w-full max-w-6xl px-5">
+    <Header />
+    <main class="mt-14">
       <slot />
     </main>
-    <Footer author={author} socialLinks={socialLinks} />
+    <BackToTop />
+    <Footer />
     <SearchModal />
   </body>
 </html>
