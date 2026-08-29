@@ -6,6 +6,7 @@ import "@fontsource-variable/jetbrains-mono";
 import "../styles/global.css";
 import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
+import SearchModal from "@components/SearchModal.astro";
 
 type Props = { title?: string; description?: string };
 
@@ -61,5 +62,6 @@ const ogImgUrl = new URL(socialImage, canonicalURL).href;
       <slot />
     </main>
     <Footer author={author} socialLinks={socialLinks} />
+    <SearchModal />
   </body>
 </html>

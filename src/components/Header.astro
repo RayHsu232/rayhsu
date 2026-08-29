@@ -86,4 +86,8 @@ const github = socialLinks.find((l) => l.text === "GitHub");
     document.documentElement.dataset.theme = next;
     localStorage.setItem("theme", next);
   });
+
+  document.querySelector("#search-btn")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("open-search"));
+  });
 </script>
