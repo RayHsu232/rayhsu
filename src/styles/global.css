@@ -112,3 +112,10 @@ html[data-theme="dark"] .astro-code span {
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
 }
+
+.topic-block:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+html[data-theme="dark"] .topic-block:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
