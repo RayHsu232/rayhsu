@@ -5,7 +5,7 @@
   overflow-y: auto;
   scrollbar-width: thin;
 }
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   #series-nav.scroller {
     position: fixed;
     top: 3.5rem;

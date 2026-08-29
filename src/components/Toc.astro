@@ -1,6 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
-
 type Heading = { depth: number; slug: string; text: string };
 type Props = { headings: Heading[] };
 
@@ -12,49 +10,48 @@ for (const heading of headings) {
 }
 ---
 
-<aside id="toc" class="scroller hidden text-[0.8125rem] min-[1201px]:block" aria-label="目录">
-  <div class="border-l border-hairline pl-4">
-    <h4 class="mb-2 text-[0.8125rem] font-semibold text-subtle">此页内容</h4>
-    <nav id="toc-nav">
-      <ul class="m-0 list-none p-0">
-        {
-          tree.map(({ heading, children }) => (
-            <li class="mb-0.5">
-              <a href={`#${heading.slug}`} class="toc-link block rounded px-2 py-0.5 leading-snug text-faint transition-colors duration-200 hover:text-ink" data-slug={heading.slug}>
-                {heading.text}
-              </a>
-              {children.length > 0 && (
-                <ul class="list-none pl-3">
-                  {children.map((child) => (
-                    <li class="mb-0.5">
-                      <a href={`#${child.slug}`} class="toc-link block rounded px-2 py-0.5 leading-snug text-faint transition-colors duration-200 hover:text-ink" data-slug={child.slug}>
-                        {child.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-  </div>
-</aside>
-
-<style>
-  #toc.scroller {
-    position: sticky;
-    top: calc(3.5rem + 16px);
-    max-height: calc(100vh - 3.5rem - 16px);
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
-</style>
+{
+  headings.length > 0 && (
+    <aside id="toc" class="scroller hidden text-[0.8125rem] min-[1201px]:block" aria-label="目录">
+      <div class="border-l border-hairline pl-4">
+        <h4 class="mb-2 text-[0.8125rem] font-semibold text-subtle">此页内容</h4>
+        <nav id="toc-nav">
+          <ul class="m-0 list-none p-0">
+            {tree.map(({ heading, children }) => (
+              <li class="mb-0.5">
+                <a
+                  href={`#${heading.slug}`}
+                  class="toc-link block rounded px-2 py-0.5 leading-snug text-faint transition-colors duration-200 hover:text-ink"
+                  data-slug={heading.slug}
+                >
+                  {heading.text}
+                </a>
+                {children.length > 0 && (
+                  <ul class="list-none pl-3">
+                    {children.map((child) => (
+                      <li class="mb-0.5">
+                        <a
+                          href={`#${child.slug}`}
+                          class="toc-link block rounded px-2 py-0.5 leading-snug text-faint transition-colors duration-200 hover:text-ink"
+                          data-slug={child.slug}
+                        >
+                          {child.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </aside>
+  )
+}
 
 <script>
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".toc-link"));
-  const bySlug = new Map(links.map((a) => [a.dataset.slug!, a]));
   const setActive = (slug: string | undefined) => {
     links.forEach((a) => {
       a.classList.toggle("is-active", a.dataset.slug === slug);

@@ -29,7 +29,7 @@ const badge = "inline-block rounded-full bg-chip px-2.5 py-0.5 text-xs text-chip
 
 <Layout title={`${post.data.title} · ${SITE_CONFIG.brandName}`} description={post.data.description}>
   <div class="mx-auto grid max-w-[1400px] grid-cols-[260px_minmax(0,1fr)_220px] max-[1201px]:grid-cols-[260px_minmax(0,1fr)] max-md:grid-cols-1">
-    <aside class="sticky top-14 hidden h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-hairline py-4 pl-4 text-sm [scrollbar-width:thin] min-[768px]:block max-md:[display:contents]">
+    <aside class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-hairline py-4 pl-4 text-sm [scrollbar-width:thin] min-[768px]:block max-md:[display:contents]">
       <SeriesNav currentId={post.id} currentCategory={post.data.category} />
     </aside>
 
