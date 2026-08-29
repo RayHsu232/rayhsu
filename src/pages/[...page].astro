@@ -1,0 +1,40 @@
+---
+import type { PaginateFunction } from "astro";
+import Layout from "@layouts/Layout.astro";
+import FeaturedTopics from "@components/FeaturedTopics.astro";
+import PostCard from "@components/PostCard.astro";
+import Pagination from "@components/Pagination.astro";
+import AuthorCard from "@components/AuthorCard.astro";
+import { getPublishedPosts } from "@lib/content";
+import { HOME_PAGE_SIZE } from "@config";
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const posts = await getPublishedPosts();
+  return paginate(posts, { pageSize: HOME_PAGE_SIZE });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout>
+  <div class="mx-auto grid max-w-[1100px] grid-cols-[1fr_300px] items-start gap-10 px-6 py-8 max-md:grid-cols-1 max-md:gap-0 max-md:p-4">
+    <section class="min-w-0" aria-label="博客主页">
+      <h1 class="sr-only">Ray Hsu 徐睿 | 来到异乡的异乡人</h1>
+      <FeaturedTopics />
+      <hr class="my-5 border-t-2 border-hairline" />
+      <h2 class="mb-5 text-xl font-extrabold tracking-[-0.01em] text-ink">📝 最新文章</h2>
+      <div>
+        {page.data.map((post) => <PostCard post={post} />)}
+        {
+          page.data.length === 0 && (
+            <p class="rounded-xl border border-hairline bg-elevated p-8 text-center text-subtle">还没有文章，敬请期待。</p>
+          )
+        }
+      </div>
+      <Pagination current={page.currentPage} total={page.lastPage} prevUrl={page.url.prev} nextUrl={page.url.next} />
+    </section>
+    <aside class="sticky top-[88px] self-start max-md:hidden">
+      <AuthorCard />
+    </aside>
+  </div>
+</Layout>
