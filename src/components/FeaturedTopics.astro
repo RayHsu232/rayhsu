@@ -1,0 +1,30 @@
+---
+import { FEATURED_TOPICS } from "@config";
+---
+
+<section aria-label="精选专题" class="mb-2">
+  <h2 class="mb-5 text-xl font-extrabold tracking-[-0.01em] text-ink">📐 精选专题</h2>
+  {
+    FEATURED_TOPICS.map((topic) => (
+      <div class="topic-block relative mb-3 cursor-pointer rounded-r-xl border-l-[3px] border-l-[#3b82f6] bg-elevated px-5 py-3.5 transition-[transform,box-shadow] duration-150 hover:translate-x-1 max-md:px-4 max-md:py-3">
+        <a href={topic.href} class="absolute inset-0 z-0" aria-label={topic.name} />
+        <div class="mb-2 flex items-baseline gap-2.5 max-md:flex-col max-md:gap-0.5">
+          <span class="whitespace-nowrap text-[1rem] font-bold text-ink">{topic.name}</span>
+          <span class="text-xs leading-snug text-subtle">{topic.desc}</span>
+        </div>
+        <ul class="m-0 flex list-none flex-col gap-1 p-0">
+          {topic.posts.map((post) => (
+            <li>
+              <a
+                href={post.href}
+                class="relative z-10 text-[0.85rem] font-medium text-ink transition-colors duration-150 hover:text-[#3b82f6]"
+              >
+                <span class="font-semibold text-[#3b82f6]">→ </span>{post.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</section>

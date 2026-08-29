@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import avatarImg from "../assets/avatar.png";
+import { Icon } from "astro-icon/components";
+import { PROFILE } from "@config";
+import { getPublishedPosts } from "@lib/content";
+import { getStats } from "@utils/posts";
+import SubscribeCard from "@components/SubscribeCard.astro";
+
+const posts = await getPublishedPosts();
+const stats = getStats(posts);
+const github = PROFILE.github;
+---
+
+<div class="rounded-xl border border-hairline bg-elevated px-4 py-6 text-center">
+  <Image src={avatarImg} alt={PROFILE.name} width={96} class="mx-auto mb-3 h-auto w-24 rounded-lg" />
+  <h2 class="mb-2 text-lg font-bold text-ink">{PROFILE.name}</h2>
+  <p class="mb-4 text-[0.8125rem] leading-normal text-subtle">{PROFILE.bio}</p>
+  <div class="mb-4 flex justify-center gap-1">
+    <span class="flex flex-col items-center rounded-md px-3 py-1 transition-colors duration-200 hover:bg-sunken">
+      <span class="text-lg font-bold text-ink">{stats.posts}</span>
+      <span class="text-xs text-subtle">归档</span>
+    </span>
+    <span class="flex flex-col items-center rounded-md px-3 py-1 transition-colors duration-200 hover:bg-sunken">
+      <span class="text-lg font-bold text-ink">{stats.posts}</span>
+      <span class="text-xs text-subtle">文章</span>
+    </span>
+    <span class="flex flex-col items-center rounded-md px-3 py-1 transition-colors duration-200 hover:bg-sunken">
+      <span class="text-lg font-bold text-ink">{stats.categories}</span>
+      <span class="text-xs text-subtle">分类</span>
+    </span>
+    <span class="flex flex-col items-center rounded-md px-3 py-1 transition-colors duration-200 hover:bg-sunken">
+      <span class="text-lg font-bold text-ink">{stats.tags}</span>
+      <span class="text-xs text-subtle">标签</span>
+    </span>
+  </div>
+  <div class="flex justify-center gap-3">
+    <a
+      href={github}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      title="GitHub"
+      class="flex size-9 items-center justify-center rounded-full bg-sunken text-subtle transition-colors duration-200 hover:bg-brand hover:text-base"
+    >
+      <Icon name="simple-icons:github" class="size-5" />
+    </a>
+  </div>
+  <SubscribeCard />
+</div>

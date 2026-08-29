@@ -20,7 +20,7 @@ const github = socialLinks.find((l) => l.text === "GitHub");
     <button
       type="button"
       id="navbar-toggle"
-      class="hidden flex-col gap-1 p-2 max-md:flex"
+      class="ml-auto hidden flex-col gap-1 p-2 max-md:flex"
       aria-expanded="false"
       aria-controls="navbar-links"
       aria-label="切换导航"
@@ -62,8 +62,8 @@ const github = socialLinks.find((l) => l.text === "GitHub");
         </span>
       </button>
       <button type="button" id="theme-toggle" class="inline-flex items-center rounded-md px-2 py-1.5 text-subtle transition-colors duration-200 hover:bg-elevated hover:text-ink" aria-label="切换主题">
-        <Icon name="ph:sun" class="block size-5 dark-hidden" />
-        <Icon name="ph:moon" class="hidden size-5 light-hidden" />
+        <Icon name="ph:sun" class="icon-sun size-5" />
+        <Icon name="ph:moon" class="icon-moon size-5" />
       </button>
     </nav>
   </div>

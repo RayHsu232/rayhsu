@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   formatDate,
+  formatDateCN,
   getAllTags,
   getPostsByTag,
   getStats,
@@ -70,5 +71,14 @@ describe("formatDate", () => {
   it("输出 YYYY-MM-DD，月日补零", () => {
     expect(formatDate(new Date("2026-08-27T00:00:00Z"))).toBe("2026-08-27");
     expect(formatDate(new Date("2026-01-05T00:00:00Z"))).toBe("2026-01-05");
+  });
+});
+
+describe("formatDateCN", () => {
+  it("formats as 2026年06月01日", () => {
+    expect(formatDateCN(new Date(Date.UTC(2026, 5, 1, 13, 20)))).toBe("2026年06月01日");
+  });
+  it("zero-pads month and day", () => {
+    expect(formatDateCN(new Date(Date.UTC(2026, 0, 5)))).toBe("2026年01月05日");
   });
 });
