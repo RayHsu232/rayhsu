@@ -3,7 +3,10 @@ import {
   formatDate,
   formatDateCN,
   getAllTags,
+  getAdjacentPosts,
   getPostsByTag,
+  getReadingMinutes,
+  getRecommendedPosts,
   getStats,
   sortByDate,
   type PostLike,
@@ -80,5 +83,54 @@ describe("formatDateCN", () => {
   });
   it("zero-pads month and day", () => {
     expect(formatDateCN(new Date(Date.UTC(2026, 0, 5)))).toBe("2026年01月05日");
+  });
+});
+
+describe("getReadingMinutes", () => {
+  it("returns 1 for short body", () => {
+    expect(getReadingMinutes("你好，博客")).toBe(1);
+  });
+  it("counts cjk chars at 350 per minute", () => {
+    expect(getReadingMinutes("汉".repeat(700))).toBe(2);
+  });
+  it("counts latin words at 200 per minute", () => {
+    expect(getReadingMinutes(Array.from({ length: 600 }, (_, i) => `w${i}`).join(" "))).toBe(3);
+  });
+  it("ignores markdown syntax and code fences", () => {
+    expect(getReadingMinutes("```python\nprint('hi')\n```\n# 标题\n正文一段话")).toBe(1);
+  });
+});
+
+describe("getAdjacentPosts", () => {
+  const mk = (id: string, date: string): PostLike => ({
+    id,
+    data: { title: id, date: new Date(date), tags: [], draft: false },
+  });
+  it("returns newer as next and older as prev", () => {
+    const posts = [mk("b", "2026-02-01"), mk("a", "2026-01-01")];
+    expect(getAdjacentPosts(posts, "a")).toEqual({ prev: null, next: posts[0] });
+    expect(getAdjacentPosts(posts, "b")).toEqual({ prev: posts[1], next: null });
+  });
+  it("returns both nulls for unknown id", () => {
+    expect(getAdjacentPosts([mk("a", "2026-01-01")], "x")).toEqual({ prev: null, next: null });
+  });
+});
+
+describe("getRecommendedPosts", () => {
+  const mk = (id: string, date: string, category?: string): PostLike => ({
+    id,
+    data: { title: id, date: new Date(date), category, tags: [], draft: false },
+  });
+  it("prefers same-category posts excluding current", () => {
+    const posts = [mk("cur", "2026-03-01", "技术"), mk("t1", "2026-02-01", "技术"), mk("o1", "2026-01-15", "随想"), mk("t2", "2026-01-01", "技术")];
+    expect(getRecommendedPosts(posts, posts[0]).map((p) => p.id)).toEqual(["t1", "t2", "o1"]);
+  });
+  it("fills up with latest posts when same category is short", () => {
+    const posts = [mk("cur", "2026-03-01", "技术"), mk("t1", "2026-02-01", "技术")];
+    expect(getRecommendedPosts(posts, posts[0], 3).map((p) => p.id)).toEqual(["t1"]);
+  });
+  it("returns empty when only current exists", () => {
+    const posts = [mk("cur", "2026-03-01")];
+    expect(getRecommendedPosts(posts, posts[0])).toEqual([]);
   });
 });

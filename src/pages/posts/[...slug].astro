@@ -1,73 +1,120 @@
 ---
+import { getCollection, render } from "astro:content";
 import Layout from "@layouts/Layout.astro";
+import SeriesNav from "@components/SeriesNav.astro";
+import Toc from "@components/Toc.astro";
+import PostAuthorCard from "@components/PostAuthorCard.astro";
+import RecommendedPosts from "@components/RecommendedPosts.astro";
+import PostSubscribeCta from "@components/PostSubscribeCta.astro";
+import { Icon } from "astro-icon/components";
+import { SITE_CONFIG } from "@config";
 import { getPublishedPosts } from "@lib/content";
-import { render } from "astro:content";
-import { formatDate } from "@utils/posts";
+import { getReadingMinutes, getAdjacentPosts, getRecommendedPosts, formatDateCN } from "@utils/posts";
 
 export async function getStaticPaths() {
-  const posts = await getPublishedPosts();
-  return posts.map((post, index) => ({
-    params: { slug: post.id },
-    props: { post, newer: posts[index - 1], older: posts[index + 1] },
-  }));
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
-const { post, newer, older } = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const allPosts = await getPublishedPosts();
+const minutes = getReadingMinutes(post.body ?? "");
+const { prev, next } = getAdjacentPosts(allPosts, post.id);
+const recommended = getRecommendedPosts(allPosts, post, 4);
+const navItem =
+  "flex flex-col rounded-lg border border-hairline p-3 px-4 transition-colors duration-200 hover:border-brand";
+const badge = "inline-block rounded-full bg-chip px-2.5 py-0.5 text-xs text-chip-ink transition-opacity duration-200 hover:opacity-80";
 ---
 
-<Layout title={`${post.data.title} · Ray Hsu`} description={post.data.description}>
-  <article class="mx-auto w-full max-w-3xl px-6 py-10 max-md:px-4 md:py-14">
-    <header class="mb-10">
-      <div class="mb-3 flex items-center gap-3 text-sm text-subtle">
-        <time datetime={post.data.date.toISOString()}>
-          {formatDate(post.data.date)}
-        </time>
-        {
-          post.data.category && (
-            <span class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs text-brand">
-              {post.data.category}
-            </span>
-          )
-        }
+<Layout title={`${post.data.title} · ${SITE_CONFIG.brandName}`} description={post.data.description}>
+  <div class="mx-auto grid max-w-[1400px] grid-cols-[260px_minmax(0,1fr)_220px] max-[1201px]:grid-cols-[260px_minmax(0,1fr)] max-md:grid-cols-1">
+    <aside class="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-hairline py-4 pl-4 text-sm [scrollbar-width:thin] min-[768px]:block max-md:[display:contents]">
+      <SeriesNav currentId={post.id} currentCategory={post.data.category} />
+    </aside>
+
+    <article class="mx-auto w-full max-w-[800px] px-10 py-6 max-md:overflow-x-hidden max-md:px-4">
+      <nav class="mb-4 text-[0.8125rem] text-faint" aria-label="面包屑">
+        <a href="/" class="text-subtle transition-colors duration-200 hover:text-brand">Home</a>
+        <span class="mx-1.5">&gt;</span>
+        <span>{post.data.title}</span>
+      </nav>
+
+      <header class="mb-8">
+        <h1 class="mb-3 text-[1.75rem] font-bold leading-tight max-md:text-[1.375rem]">{post.data.title}</h1>
+        <div class="flex flex-wrap items-center gap-3 text-[0.8125rem] text-subtle">
+          <span class="inline-flex items-center gap-1">
+            <Icon name="ph:user" class="size-3.5 opacity-60" />
+            <a href={SITE_CONFIG.socialLinks[0]?.href ?? "/"} class="transition-colors duration-200 hover:text-brand">{SITE_CONFIG.author}</a>
+          </span>
+          <span class="inline-flex items-center gap-1">
+            <Icon name="ph:calendar-blank" class="size-3.5 opacity-60" />
+            {formatDateCN(post.data.date)}
+          </span>
+          <span class="inline-flex items-center gap-1">
+            <Icon name="ph:clock" class="size-3.5 opacity-60" />
+            大约 {minutes} 分钟
+          </span>
+          {
+            post.data.category && (
+              <span class="inline-flex items-center gap-1">
+                <Icon name="ph:folder-open" class="size-3.5 opacity-60" />
+                <span class={badge}>{post.data.category}</span>
+              </span>
+            )
+          }
+          {
+            post.data.tags.length > 0 && (
+              <span class="inline-flex flex-wrap items-center gap-1">
+                <Icon name="ph:tag" class="size-3.5 opacity-60" />
+                {post.data.tags.map((tag) => (
+                  <a href={`/tags/${tag}/`} class={badge}>
+                    {tag}
+                  </a>
+                ))}
+              </span>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="prose max-w-none">
+        <Content />
       </div>
-      <h1 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
-        {post.data.title}
-      </h1>
-    </header>
 
-    <div class="prose prose-zinc max-w-[65ch]">
-      <Content />
+      <footer class="mt-12">
+        <PostAuthorCard />
+
+        <nav class="grid grid-cols-2 gap-4 border-t border-hairline py-6 max-md:grid-cols-1" aria-label="上下篇">
+          {
+            prev ? (
+              <a href={`/posts/${prev.id}/`} class={`${navItem} items-start`}>
+                <span class="mb-1 text-xs text-faint">&laquo; 上一页</span>
+                <span class="text-sm font-medium text-ink">{prev.data.title}</span>
+              </a>
+            ) : (
+              <div />
+            )
+          }
+          {
+            next ? (
+              <a href={`/posts/${next.id}/`} class={`${navItem} items-end text-right`}>
+                <span class="mb-1 text-xs text-faint">下一页 &raquo;</span>
+                <span class="text-sm font-medium text-ink">{next.data.title}</span>
+              </a>
+            ) : (
+              <div />
+            )
+          }
+        </nav>
+
+        <RecommendedPosts posts={recommended} />
+        <PostSubscribeCta />
+      </footer>
+    </article>
+
+    <div class="sticky top-14 hidden h-[calc(100vh-3.5rem)] overflow-y-auto py-4 pr-4 text-[0.8125rem] [scrollbar-width:thin] min-[1201px]:block">
+      <Toc headings={headings.filter((h) => h.depth === 2 || h.depth === 3)} />
     </div>
-
-    <nav
-      class="mt-14 grid gap-4 border-t border-line pt-8 sm:grid-cols-2"
-      aria-label="相邻文章"
-    >
-      {
-        older ? (
-          <a
-            href={`/posts/${older.id}/`}
-            class="rounded-2xl border border-line bg-elevated p-4 text-sm text-subtle transition-colors hover:border-brand hover:text-ink"
-          >
-            ← 较早：{older.data.title}
-          </a>
-        ) : (
-          <span />
-        )
-      }
-      {
-        newer ? (
-          <a
-            href={`/posts/${newer.id}/`}
-            class="rounded-2xl border border-line bg-elevated p-4 text-right text-sm text-subtle transition-colors hover:border-brand hover:text-ink"
-          >
-            较新：{newer.data.title} →
-          </a>
-        ) : (
-          <span />
-        )
-      }
-    </nav>
-  </article>
+  </div>
 </Layout>
