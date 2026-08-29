@@ -58,3 +58,15 @@ export interface HeaderProps {
   siteLogo: string;
   navLinks: { text: string; href: string }[];
 }
+
+export interface FeaturedTopicPost {
+  title: string;
+  href: string;
+}
+
+export interface FeaturedTopic {
+  name: string;
+  desc: string;
+  href: string;
+  posts: FeaturedTopicPost[];
+}

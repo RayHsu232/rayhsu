@@ -47,3 +47,10 @@ export function getStats<T extends PostLike>(posts: T[]): {
 export function formatDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+export function formatDateCN(date: Date): string {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(date.getUTCDate()).padStart(2, "0");
+  return `${y}年${m}月${d}日`;
+}

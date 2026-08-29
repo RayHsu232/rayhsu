@@ -1,4 +1,4 @@
-import type { SiteConfig, SiteContent } from "../types";
+import type { SiteConfig, SiteContent, FeaturedTopic } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
   title: "Ray Hsu 徐睿 | 来到异乡的异乡人",
@@ -96,3 +96,17 @@ export const PROFILE = {
 };
 
 // #5755ff
+
+export const HOME_PAGE_SIZE = 8;
+
+export const FEATURED_TOPICS: FeaturedTopic[] = [
+  {
+    name: "📚 精选专题第一期",
+    desc: "专题简介占位：用一句话介绍这个系列讲什么、适合谁读。",
+    href: "/posts/rebuilding-my-site-with-astro/",
+    posts: [
+      { title: "用 Astro 把个人站改造成博客", href: "/posts/rebuilding-my-site-with-astro/" },
+      { title: "你好，博客", href: "/posts/hello-world/" },
+    ],
+  },
+];
