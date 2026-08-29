@@ -73,15 +73,11 @@ const github = socialLinks.find((l) => l.text === "GitHub");
   const toggle = document.querySelector("#navbar-toggle");
   const links = document.querySelector("#navbar-links");
   toggle?.addEventListener("click", () => {
-    const open = links?.classList.toggle("max-md:flex");
-    const hidden = links?.classList.toggle("max-md:hidden");
-    toggle?.setAttribute("aria-expanded", String(!hidden));
+    const isOpen = links?.classList.toggle("max-md:flex") ?? false;
+    toggle?.setAttribute("aria-expanded", String(isOpen));
   });
   links?.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => {
-      links.classList.add("max-md:hidden");
-      links.classList.remove("max-md:flex");
-    }),
+    a.addEventListener("click", () => links?.classList.remove("max-md:flex")),
   );
 
   const themeBtn = document.querySelector("#theme-toggle");
